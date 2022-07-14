@@ -147,7 +147,7 @@
             "type": "Microsoft.Sql/servers/databases",
             "apiVersion": "2021-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('sqlServerName'), '/wwi")]",
+            "name": "[concat(parameters('sqlServerName'), '/wwi')]",
             "properties": {
             },
             "sku": {
