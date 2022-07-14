@@ -154,6 +154,6 @@
                 "name": "S3",
                 "tier": "Standard"
             }
-        },
+        }
     ]
 }
