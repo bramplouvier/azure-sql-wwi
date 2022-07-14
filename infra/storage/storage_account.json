@@ -5,6 +5,9 @@
         "storage_account_name": {
             "type": "String"
         },
+        "sql_server_name": {
+            "type": "String"
+        },            
         "location": {
             "type": "String"
         }
@@ -84,6 +87,20 @@
                 "denyEncryptionScopeOverride": false,
                 "publicAccess": "None"
             }
-        }
+        },
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2021-11-01-preview",
+            "name": "[parameters('sql_server_name')]",
+            "location": "[parameters('location')]",
+            "kind": "v12.0",
+            "properties": {
+                "administratorLogin": "sqladmin",
+                "version": "12.0",
+                "minimalTlsVersion": "1.2",
+                "publicNetworkAccess": "Enabled",
+                "restrictOutboundNetworkAccess": "Disabled"
+            }
+        },
     ]
 }
