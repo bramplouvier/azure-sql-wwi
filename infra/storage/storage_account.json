@@ -101,6 +101,6 @@
                 "publicNetworkAccess": "Enabled",
                 "restrictOutboundNetworkAccess": "Disabled"
             }
-        },
+        }
     ]
 }
