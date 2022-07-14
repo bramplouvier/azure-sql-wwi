@@ -2,8 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "storageAccounts_hdpbacpacs156053916_name": {
-            "defaultValue": "hdpbacpacs156053916",
+        "storageAccounts_account_name": {
+            "type": "String"
+        },
+        "location": {
             "type": "String"
         }
     },
@@ -12,8 +14,8 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-09-01",
-            "name": "[parameters('storageAccounts_hdpbacpacs156053916_name')]",
-            "location": "westeurope",
+            "name": "[parameters('storage_account_name')]",
+            "location": "[parameters('location')]",
             "sku": {
                 "name": "Standard_LRS",
                 "tier": "Standard"
@@ -48,9 +50,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storageAccounts_hdpbacpacs156053916_name'), '/default')]",
+            "name": "[concat(parameters('storage_account_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_hdpbacpacs156053916_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storage_account_name'))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -67,62 +69,12 @@
             }
         },
         {
-            "type": "Microsoft.Storage/storageAccounts/fileServices",
-            "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storageAccounts_hdpbacpacs156053916_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_hdpbacpacs156053916_name'))]"
-            ],
-            "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
-            },
-            "properties": {
-                "protocolSettings": {
-                    "smb": {}
-                },
-                "cors": {
-                    "corsRules": []
-                },
-                "shareDeleteRetentionPolicy": {
-                    "enabled": true,
-                    "days": 7
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts/queueServices",
-            "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storageAccounts_hdpbacpacs156053916_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_hdpbacpacs156053916_name'))]"
-            ],
-            "properties": {
-                "cors": {
-                    "corsRules": []
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Storage/storageAccounts/tableServices",
-            "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storageAccounts_hdpbacpacs156053916_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_hdpbacpacs156053916_name'))]"
-            ],
-            "properties": {
-                "cors": {
-                    "corsRules": []
-                }
-            }
-        },
-        {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storageAccounts_hdpbacpacs156053916_name'), '/default/bacpacs')]",
+            "name": "[concat(parameters('storage_account_name'), '/default/bacpacs')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_hdpbacpacs156053916_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_hdpbacpacs156053916_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storage_account_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storage_account_name'))]"
             ],
             "properties": {
                 "immutableStorageWithVersioning": {
