@@ -32,7 +32,7 @@
             "metadata": {
                 "description": "The name of the Storage Account"
             }
-        }
+        },
         "sqlServerName": {
             "type": "string",
             "defaultValue": "[format('sql{0}', uniqueString(resourceGroup().id))]",
