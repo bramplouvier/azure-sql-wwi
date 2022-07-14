@@ -42,6 +42,7 @@
         },
         "administratorLogin": {
             "type": "string",
+            "defaultValue": "sqladmin",
             "metadata": {
                 "description": "Admin login for the SQL Server"
             }
@@ -88,6 +89,16 @@
                     "keySource": "Microsoft.Storage"
                 },
                 "accessTier": "Hot"
+            },
+            "outputs": {
+                "storageAccountName": {
+                  "type": "string",
+                  "value": "[parameters('storageAccountName')]"
+                },
+                "storageAccountId": {
+                  "type": "string",
+                  "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+                }
             }
         },
         {
