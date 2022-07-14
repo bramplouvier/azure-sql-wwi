@@ -2,14 +2,49 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "storage_account_name": {
-            "type": "String"
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Premium_LRS",
+                "Premium_ZRS",
+                "Standard_GRS",
+                "Standard_GZRS",
+                "Standard_LRS",
+                "Standard_RAGRS",
+                "Standard_RAGZRS",
+                "Standard_ZRS"
+            ],
+            "metadata": {
+                "description": "Storage Account type"
+            }
         },
-        "sql_server_name": {
-            "type": "String"
-        },            
         "location": {
-            "type": "String"
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for the storage account."
+            }
+        },
+        "storageAccountName": {
+            "type": "string",
+            "defaultValue": "[format('store{0}', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "The name of the Storage Account"
+            }
+        }
+        "sqlServerName": {
+            "type": "string",
+            "defaultValue": "[format('sql{0}', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "The name of the SQL Server"
+            }
+        },
+        "administratorLogin": {
+            "type": "string"
+        },
+        "administratorLoginPassword": {
+            "type": "secureString"
         }
     },
     "variables": {},
@@ -17,11 +52,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-09-01",
-            "name": "[parameters('storage_account_name')]",
+            "name": "[parameters('storageAccountName')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "[parameters('storageAccountType')]"
             },
             "kind": "StorageV2",
             "properties": {
@@ -53,9 +87,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storage_account_name'), '/default')]",
+            "name": "[concat(parameters('storageAccountName'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storage_account_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -74,10 +108,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2021-09-01",
-            "name": "[concat(parameters('storage_account_name'), '/default/bacpacs')]",
+            "name": "[concat(parameters('storageAccountName'), '/default/bacpacs')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storage_account_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storage_account_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "properties": {
                 "immutableStorageWithVersioning": {
@@ -91,11 +125,12 @@
         {
             "type": "Microsoft.Sql/servers",
             "apiVersion": "2021-11-01-preview",
-            "name": "[parameters('sql_server_name')]",
+            "name": "[parameters('sqlServerName')]",
             "location": "[parameters('location')]",
             "kind": "v12.0",
             "properties": {
-                "administratorLogin": "sqladmin",
+                "administratorLogin": "[parameters('administratorLogin')]",
+                "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
                 "version": "12.0",
                 "minimalTlsVersion": "1.2",
                 "publicNetworkAccess": "Enabled",
