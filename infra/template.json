@@ -168,7 +168,7 @@
             "location": "[resourceGroup().location]",
             "kind": "AzureCLI",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'bacpacs')]",
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', parameters('storageAccountName'), 'default', 'bacpacs')]",
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('sqlServerName'), 'wwi')]"                
             ],
             "properties": {
