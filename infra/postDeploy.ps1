@@ -1,3 +1,2 @@
-param([string] $textToEcho, [securestring] $administratorLoginPassword)
-Write-Output $textToEcho
-Write-Output $administratorLoginPassword
+Write-Output  ("administratorLogin: {0}" -f ${Env:administratorLogin})
+Write-Output  ("administratorLoginPassword: {0}" -f ${Env:administratorLoginPassword})
