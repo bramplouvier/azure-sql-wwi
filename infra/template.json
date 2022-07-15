@@ -167,7 +167,7 @@
             },
             "dependsOn": [
                 "[parameters('sqlServerName')]"
-            ],            
+            ] 
         },
         {
             "type": "Microsoft.Resources/deploymentScripts",
