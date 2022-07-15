@@ -173,17 +173,14 @@
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell",
             "dependsOn": [
-                "scriptInTemplate1"
+                "[parameters('storageAccountName')]"
             ],
             "properties": {
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.4",
                 "timeout": "PT1H",
-                "arguments": "[reference([parameters('storageAccountName')]).outputs.storageAccountName]",
-                "scriptContent": "
-                  param([string] $textToEcho)
-                  Write-Output $textToEcho
-                ",
+                "arguments": "[reference(parameters('storageAccountName')).outputs.storageAccountName]",
+                "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/postDeploy.ps1",
                 "cleanupPreference": "Always",
                 "retentionInterval": "P1D"
             }
