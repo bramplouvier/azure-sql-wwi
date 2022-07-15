@@ -1,2 +1,2 @@
-param([string] $textToEcho)
+param([string] $textToEcho, [securestring] sqlAdminUserPassword)
 Write-Output $textToEcho
