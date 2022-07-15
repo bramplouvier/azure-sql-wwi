@@ -176,8 +176,8 @@
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell",
             "dependsOn": [
-                "[parameters('storageAccountName')]",
-                "[concat(parameters('sqlServerName'), '/wwi')]"                
+                "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+                "[resourceId('Microsoft.Sql/servers/databases/', concat(parameters('sqlServerName'), '/wwi'))]"                
             ],
             "properties": {
                 "forceUpdateTag": "[parameters('utcValue')]",
