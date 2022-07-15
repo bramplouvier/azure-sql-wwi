@@ -54,7 +54,10 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "storageAccountApiVersion": "[providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]]",
+        "storageAccountResourceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')]"
+    },
     "resources": [       
         {
             "type": "Microsoft.Storage/storageAccounts",
@@ -185,7 +188,7 @@
                     },
                     {
                       "name": "storageAccountKey",
-                      "secureValue": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+                      "secureValue": "[listKeys(variables('storageAccountResourceId'), variables('storageAccountApiVersion')).keys[0].value]"
                     }
                   ],
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/postDeploy.ps1",
