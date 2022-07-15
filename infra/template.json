@@ -192,7 +192,15 @@
                     {
                         "name": "storageAccountName",
                         "value": "[parameters('storageAccountName')]"
-                      }                    
+                    },
+                    {
+                        "name": "sqlServerName",
+                        "value": "[parameters('sqlServerName')]"
+                    },
+                    {
+                        "name": "resourceGroup",
+                        "value": "[resourceGroup().name]"
+                    }                                                             
                   ],
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/setupSampleDatabase.sh",
                 "cleanupPreference": "Always",

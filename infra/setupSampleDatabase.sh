@@ -11,3 +11,13 @@ az storage blob upload-batch \
     --account-key $storageAccountKey \
     --account-name $storageAccountName \
     --overwrite
+
+az sql db import \
+        --admin-password $administratorLoginPassword \
+        --admin-user $administratorLogin \
+        --storage-key $storageAccountKey \
+        --storage-key-type StorageAccessKey \
+        --storage-uri https://$storageAccountName.blob.core.windows.net/bacpacs/WideWorldImporters-Standard.bacpac \
+        --name wwi \
+        --resource-group $resourceGroup \
+        --server $sqlServerName
