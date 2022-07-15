@@ -172,17 +172,18 @@
         {
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
-            "name": "scriptInTemplate2",
+            "name": "postDeploy",
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell",
             "dependsOn": [
-                "[parameters('storageAccountName')]"
+                "[parameters('storageAccountName')]",
+                "[concat(parameters('sqlServerName'), '/wwi')]"                
             ],
             "properties": {
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.4",
                 "timeout": "PT1H",
-                "arguments": "[reference(parameters('storageAccountName')).outputs.storageAccountName]",
+                "arguments": "[concat('-textToEcho', ' ', concat('\\\"', reference(parameters('storageAccountName')).outputs.storageAccountName, '\\\"'))]",
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/postDeploy.ps1",
                 "cleanupPreference": "Always",
                 "retentionInterval": "P1D"
