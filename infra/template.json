@@ -188,7 +188,11 @@
                     {
                       "name": "storageAccountKey",
                       "secureValue": "[listKeys(variables('storageAccountResourceId'), '2021-09-01').keys[0].value]"
-                    }
+                    },
+                    {
+                        "name": "storageAccountName",
+                        "value": "[parameters('storageAccountName')]"
+                      }                    
                   ],
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/setupSampleDatabase.sh",
                 "cleanupPreference": "Always",
