@@ -165,6 +165,9 @@
                 "name": "S3",
                 "tier": "Standard"
             }
+            "dependsOn": [
+                "[parameters('sqlServerName')]"
+            ],            
         },
         {
             "type": "Microsoft.Resources/deploymentScripts",
