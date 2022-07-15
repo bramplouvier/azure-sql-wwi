@@ -173,7 +173,7 @@
             ],
             "properties": {
                 "forceUpdateTag": "1",
-                "azCliVersion": "2.38.0",
+                "azCliVersion": "2.37.0",
                 "timeout": "PT1H",
                 "arguments": "",
                 "environmentVariables": [
