@@ -1,3 +1,3 @@
-param([string] $textToEcho, [securestring] $sqlAdminUserPassword)
+param([string] $textToEcho, [securestring] $administratorLoginPassword)
 Write-Output $textToEcho
-Write-Output $sqlAdminUserPassword
+Write-Output $administratorLoginPassword
