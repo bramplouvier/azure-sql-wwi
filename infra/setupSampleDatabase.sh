@@ -19,5 +19,6 @@ az sql db import \
         --storage-key-type StorageAccessKey \
         --storage-uri https://$storageAccountName.blob.core.windows.net/bacpacs/WideWorldImporters-Standard.bacpac \
         --name wwi \
+        --auth-type SQL \
         --resource-group $resourceGroup \
         --server $sqlServerName
