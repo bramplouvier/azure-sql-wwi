@@ -173,7 +173,7 @@
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "6.4",
                 "timeout": "PT1H",
-                "arguments": "[concat('-textToEcho', ' ', concat('\\\"', parameters('storageAccountName'), '\\\"'), '-administratorLoginPassword', ' ', concat('\\\"', parameters('administratorLoginPassword'))]",
+                "arguments": "[concat('-textToEcho', ' ', concat('\\\"', parameters('storageAccountName'), '\\\"'), '-administratorLoginPassword', ' ', concat('\\\"', parameters('administratorLoginPassword')))]",
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/postDeploy.ps1",
                 "cleanupPreference": "Always",
                 "retentionInterval": "P1D"
