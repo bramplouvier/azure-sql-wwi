@@ -89,16 +89,6 @@
                     "keySource": "Microsoft.Storage"
                 },
                 "accessTier": "Hot"
-            },
-            "outputs": {
-                "storageAccountName": {
-                  "type": "string",
-                  "value": "[parameters('storageAccountName')]"
-                },
-                "storageAccountId": {
-                  "type": "string",
-                  "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-                }
             }
         },
         {
@@ -183,7 +173,7 @@
                 "forceUpdateTag": "1",
                 "azPowerShellVersion": "6.4",
                 "timeout": "PT1H",
-                "arguments": "[concat('-textToEcho', ' ', concat('\\\"', reference(parameters('storageAccountName')).outputs.storageAccountName, '\\\"'))]",
+                "arguments": "[concat('-textToEcho', ' ', concat('\\\"', parameters('storageAccountName'), '\\\"'))]",
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/postDeploy.ps1",
                 "cleanupPreference": "Always",
                 "retentionInterval": "P1D"
