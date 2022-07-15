@@ -164,7 +164,7 @@
             "sku": {
                 "name": "S3",
                 "tier": "Standard"
-            }
+            },
             "dependsOn": [
                 "[parameters('sqlServerName')]"
             ],            
