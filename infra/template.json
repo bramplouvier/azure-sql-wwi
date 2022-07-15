@@ -40,13 +40,6 @@
                 "description": "The name of the SQL Server"
             }
         },
-        "keyVaultName": {
-            "type": "string",
-            "defaultValue": "[format('vault{0}', uniqueString(resourceGroup().id))]",
-            "metadata": {
-                "description": "The name of the SQL Server"
-            }
-        },
         "administratorLogin": {
             "type": "string",
             "defaultValue": "sqladmin",
@@ -189,6 +182,10 @@
                     {
                       "name": "administratorLoginPassword",
                       "secureValue": "[parameters('administratorLoginPassword')]"
+                    },
+                    {
+                      "name": "storageAccountKey",
+                      "secureValue": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
                     }
                   ],
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/postDeploy.ps1",
