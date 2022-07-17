@@ -191,6 +191,10 @@
             "type": "Microsoft.Sql/servers/firewallRules",
             "apiVersion": "2021-11-01-preview",
             "name": "[concat(parameters('sqlServerName'), '/AllowAllWindowsAzureIps')]",
+            "properties": {
+                "endIpAddress": "0.0.0.0",
+                "startIpAddress": "0.0.0.0"
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
             ]
