@@ -79,7 +79,10 @@
             "properties": {
                 "roleDefinitionId": "[variables('Contributor')]",
                 "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))).principalId]"
-            }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]"
+            ]
         },         
         {
             "type": "Microsoft.Storage/storageAccounts",
@@ -191,9 +194,16 @@
             "location": "[resourceGroup().location]",
             "kind": "AzureCLI",
             "dependsOn": [
+                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', parameters('storageAccountName'), 'default', 'bacpacs')]",
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('sqlServerName'), 'wwi')]"                
             ],
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
+                }
+            },
             "properties": {
                 "forceUpdateTag": "1",
                 "azCliVersion": "2.37.0",
