@@ -39,6 +39,13 @@
             "metadata": {
                 "description": "The name of the SQL Server"
             }
+        },        
+        "identityName": {
+            "type": "string",
+            "defaultValue": "[format('uaid{0}', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "The name of the user assigned identity used to setup SQL Server"
+            }
         },
         "administratorLogin": {
             "type": "string",
@@ -57,7 +64,13 @@
     "variables": {
         "storageAccountResourceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
     },
-    "resources": [       
+    "resources": [    
+        {
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "apiVersion": "2018-11-30",
+            "name": "[parameters('identityName')]",
+            "location": "westeurope"
+        },   
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-09-01",
