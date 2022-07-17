@@ -70,7 +70,16 @@
             "apiVersion": "2018-11-30",
             "name": "[parameters('identityName')]",
             "location": "westeurope"
-        },   
+        },  
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), resourceGroup().id, 'contributer')]",
+            "properties": {
+                "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))).principalId]"
+            }
+        },         
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-09-01",
