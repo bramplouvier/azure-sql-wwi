@@ -11,6 +11,8 @@ az storage blob upload-batch \
     --account-key $storageAccountKey \
     --account-name $storageAccountName \
     --overwrite
+    
+sleep 5
 
 az sql db import \
         --admin-password $administratorLoginPassword \
@@ -22,3 +24,6 @@ az sql db import \
         --auth-type SQL \
         --resource-group $resourceGroup \
         --server $sqlServerName
+
+echo "done"
+return 1
