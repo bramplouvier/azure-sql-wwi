@@ -79,7 +79,8 @@
             "name": "[guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), resourceGroup().id, 'contributer')]",
             "properties": {
                 "roleDefinitionId": "[variables('Owner')]",
-                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))).principalId]"
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))).principalId]",
+                "principalType": "ServicePrincipal"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]"
