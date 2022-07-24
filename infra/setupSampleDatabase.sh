@@ -11,7 +11,9 @@ az storage blob upload-batch \
     --account-key $storageAccountKey \
     --account-name $storageAccountName \
     --overwrite
-    
+
+die
+
 #sleep 5
 
 #az sql db import \
