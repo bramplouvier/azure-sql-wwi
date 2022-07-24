@@ -224,7 +224,7 @@
                 "timeout": "PT1H",
                 "arguments": "",
                 "cleanupPreference": "OnExpiration",
-                 "retentionInterval": "P4D",
+                "retentionInterval": "P4D",
                 "environmentVariables": [
                     {
                       "name": "administratorLogin",
