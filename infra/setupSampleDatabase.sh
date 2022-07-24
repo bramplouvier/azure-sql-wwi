@@ -23,3 +23,10 @@ timeout 10 az sql db import \
         --auth-type SQL \
         --resource-group $resourceGroup \
         --server $sqlServerName
+
+RC=$?
+if [[ $RC -eq 124 ]]; then
+  exit 0
+else
+  exit $RC
+fi
