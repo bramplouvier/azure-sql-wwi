@@ -59,13 +59,6 @@
             "metadata": {
                 "description": "Admin password for the SQL Server"
             }
-        },
-        "updateGuid": {
-            "type": "string",
-            "defaultValue": "[newGuid()]",
-            "metadata": {
-                "description": "Guid used by the forceUpdateTag property to force execution of the script"
-            }
         }
     },
     "variables": {
@@ -226,7 +219,7 @@
                 }
             },
             "properties": {
-                "forceUpdateTag": "[parameters('updateGuid')]",
+                "forceUpdateTag": "1",
                 "azCliVersion": "2.37.0",
                 "timeout": "PT1H",
                 "arguments": "",
