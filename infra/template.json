@@ -225,13 +225,11 @@
                     "[resourceID('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
                 }
             },
-            "cleanupPreference": "OnSuccess",
             "properties": {
                 "forceUpdateTag": "[parameters('updateGuid')]",
                 "azCliVersion": "2.37.0",
                 "timeout": "PT1H",
                 "arguments": "",
-                "cleanupPreference": "OnSuccess",
                 "environmentVariables": [
                     {
                       "name": "administratorLogin",
@@ -259,8 +257,8 @@
                     }                                                             
                   ],
                 "primaryScriptUri": "https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/setupSampleDatabase.sh",
-                "cleanupPreference": "Always",
-                "retentionInterval": "P1D"
+                "retentionInterval": "P1D",
+                "cleanupPreference": "OnSuccess"
             }
         }
     ]
