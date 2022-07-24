@@ -25,7 +25,7 @@ timeout 10 az sql db import \
         --server $sqlServerName
 
 RC=$?
-if [[ $RC -eq 124 ]]; then
+if [[ $RC -eq 143 ]]; then
   exit 0
 else
   exit $RC
