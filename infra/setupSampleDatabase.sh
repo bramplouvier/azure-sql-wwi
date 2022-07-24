@@ -12,20 +12,14 @@ az storage blob upload-batch \
     --account-name $storageAccountName \
     --overwrite
 
-die
-
-#sleep 5
-
-#az sql db import \
-#        --admin-password $administratorLoginPassword \
-#        --admin-user $administratorLogin \
-#        --storage-key $storageAccountKey \
-#        --storage-key-type StorageAccessKey \
-#        --storage-uri https://$storageAccountName.blob.core.windows.net/bacpacs/WideWorldImporters-Standard.bacpac \
-#        --name wwi \
-#        --auth-type SQL \
-#        --resource-group $resourceGroup \
-#        --server $sqlServerName
-
-#echo "done"
-#return 1
+# Use timeout to prevent deployment from waiting on import
+timeout 10 az sql db import \
+        --admin-password $administratorLoginPassword \
+        --admin-user $administratorLogin \
+        --storage-key $storageAccountKey \
+        --storage-key-type StorageAccessKey \
+        --storage-uri https://$storageAccountName.blob.core.windows.net/bacpacs/WideWorldImporters-Standard.bacpac \
+        --name wwi \
+        --auth-type SQL \
+        --resource-group $resourceGroup \
+        --server $sqlServerName
