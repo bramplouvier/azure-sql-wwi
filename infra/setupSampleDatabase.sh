@@ -5,18 +5,20 @@ export wwiUrl="https://github.com/Microsoft/sql-server-samples/releases/download
 mkdir -p "bacpacs"
 wget -P "./bacpacs" $wwiUrl
 
+ACCOUNT_KEY=$(az storage account keys list \
+    --resource-group rg-azure-wwi-test \
+    --account-name stordb2h35j3ll5 | jq '.[0].value')
+
 az storage blob upload-batch \
     --source "bacpacs" \
     --destination "bacpacs" \
-    --account-key $storageAccountKey \
-    --account-name $storageAccountName \
     --overwrite
 
 # Use timeout to prevent deployment from waiting on import
 timeout 10 az sql db import \
         --admin-password $administratorLoginPassword \
         --admin-user $administratorLogin \
-        --storage-key $storageAccountKey \
+        --storage-key $ACCOUNT_KEY \
         --storage-key-type StorageAccessKey \
         --storage-uri https://$storageAccountName.blob.core.windows.net/bacpacs/WideWorldImporters-Standard.bacpac \
         --name wwi \
