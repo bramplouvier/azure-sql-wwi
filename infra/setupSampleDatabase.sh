@@ -8,10 +8,10 @@ ACCOUNT_KEY=$(az storage account keys list \
     --resource-group $resourceGroup \
     --account-name $storageAccountName | jq '.[0].value')
 
-az storage blob upload-batch \
+az storage blob upload \
     --source "database.bacpac" \
     --destination "bacpacs" \
-    --overwrite
+    --overwrite true
 
 az sql db import \
         --admin-password $administratorLoginPassword \
