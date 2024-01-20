@@ -1,7 +1,8 @@
 #printenv
 
+az login
 
-curl -L -o "$databaseName.bacpac" $bacpacUrl
+curl -L -o "$databaseName.bacpac" $bacpacUrl > /dev/null
 
 ACCOUNT_KEY=$(az storage account keys list \
     --resource-group $resourceGroup \
