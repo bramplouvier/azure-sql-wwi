@@ -1,7 +1,5 @@
 #printenv
 
-az login --identity 
-
 curl -L -o "$databaseName.bacpac" $bacpacUrl > /dev/null
 
 ACCOUNT_KEY=$(az storage account keys list \
