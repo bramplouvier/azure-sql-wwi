@@ -9,8 +9,8 @@ ACCOUNT_KEY=$(az storage account keys list \
 az storage blob upload \
     --account-name $storageAccountName \
     --container-name bacpacs \
-    --name database.bacpac \
-    --file database.bacpac \
+    --name "${databaseName}.bacpac" \
+    --file "${databaseName}.bacpac" \
     --auth-mode login
     --overwrite true
 
