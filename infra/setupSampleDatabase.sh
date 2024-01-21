@@ -11,7 +11,7 @@ az storage blob upload \
     --container-name bacpacs \
     --name "${databaseName}.bacpac" \
     --file "${databaseName}.bacpac" \
-    --auth-mode login
+    --auth-mode login \
     --overwrite true
 
 az sql db import \
