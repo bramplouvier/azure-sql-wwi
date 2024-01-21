@@ -1,6 +1,6 @@
 #printenv
 
-az login
+az login --identity 
 
 curl -L -o "$databaseName.bacpac" $bacpacUrl > /dev/null
 
