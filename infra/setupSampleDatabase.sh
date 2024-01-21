@@ -7,8 +7,11 @@ ACCOUNT_KEY=$(az storage account keys list \
     --account-name $storageAccountName | jq '.[0].value')
 
 az storage blob upload \
-    --source "database.bacpac" \
-    --destination "bacpacs" \
+    --account-name $storageAccountName \
+    --container-name bacpacs \
+    --name database.bacpac \
+    --file database.bacpac \
+    --auth-mode login
     --overwrite true
 
 az sql db import \
