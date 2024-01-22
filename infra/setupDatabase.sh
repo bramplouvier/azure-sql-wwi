@@ -4,15 +4,14 @@ curl -L -o "$databaseName.bacpac" $bacpacUrl > /dev/null
 
 ACCOUNT_KEY=$(az storage account keys list \
     --resource-group $resourceGroup \
-    --account-name $storageAccountName | jq '.[0].value')
+    --account-name $storageAccountName | jq --raw-output '.[0].value')
 
 az storage blob upload \
     --account-name $storageAccountName \
     --container-name bacpacs \
     --name "${databaseName}.bacpac" \
     --file "${databaseName}.bacpac" \
-    --auth-mode login \
-    --overwrite true
+    --auth-mode login
 
 az sql db import \
         --admin-password $administratorLoginPassword \
