@@ -28,17 +28,14 @@ jobs:
         uses: Azure/cli@v1
         with:
           inlineScript: |
-            az bicep build –file ./infra/main.bicep –outfile ./main.json
+            az bicep build –-file ./infra/main.bicep -–outfile ./main.json
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ARM Templates
-          body: |
-            Bicep build output
-          draft: false
-          prerelease: false
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: main.json
+          asset_name: ARM template
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "ARM template built from bicep scripts"
