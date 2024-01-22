@@ -35,7 +35,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: main.json
-          asset_name: ARM template
+          asset_name: main.json
           tag: ${{ github.ref }}
           overwrite: true
           body: "ARM template built from bicep scripts"
