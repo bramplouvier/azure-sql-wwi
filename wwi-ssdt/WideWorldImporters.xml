@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetDatabaseName>wwi2</TargetDatabaseName>
+    <TargetConnectionString>Data Source=wwidxademo.database.windows.net;Initial Catalog=wwi2;User ID="Bram Plouvier | DXA.nl - bram@dxa.nl";Password=******;Connect Timeout=30;Authentication=ActiveDirectoryInteractive;Application Name=sqltools;Command Timeout=30</TargetConnectionString>
+    <AllowIncompatiblePlatform>True</AllowIncompatiblePlatform>
+    <CreateNewDatabase>True</CreateNewDatabase>
+    <DropPermissionsNotInSource>True</DropPermissionsNotInSource>
+    <DropObjectsNotInSource>True</DropObjectsNotInSource>
+    <DropRoleMembersNotInSource>True</DropRoleMembersNotInSource>
+    <IgnoreKeywordCasing>False</IgnoreKeywordCasing>
+    <IgnoreSemicolonBetweenStatements>False</IgnoreSemicolonBetweenStatements>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <AllowDropBlockingAssemblies>True</AllowDropBlockingAssemblies>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+  </PropertyGroup>
+</Project>
