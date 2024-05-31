@@ -1,4 +1,5 @@
-﻿CREATE TABLE DataLoadSimulation.[ColdRoomTemperatures_temp] (
+﻿/*
+CREATE TABLE DataLoadSimulation.[ColdRoomTemperatures_temp] (
     [ColdRoomTemperatureID] BIGINT                                      NOT NULL,
     [ColdRoomSensorNumber]  INT                                         NOT NULL,
     [RecordedWhen]          DATETIME2 (7)                               NOT NULL,
@@ -12,4 +13,4 @@
 		--   a performance degradation would be expected)
 )
 WITH (MEMORY_OPTIMIZED = OFF, DURABILITY=SCHEMA_ONLY);
-
+*/

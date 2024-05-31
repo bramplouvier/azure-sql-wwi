@@ -1,13 +1,8 @@
-﻿
-CREATE PROCEDURE Website.RecordColdRoomTemperatures
+﻿CREATE PROCEDURE Website.RecordColdRoomTemperatures
 @SensorReadings Website.SensorDataList READONLY
-WITH NATIVE_COMPILATION, SCHEMABINDING, EXECUTE AS OWNER
+WITH EXECUTE AS OWNER
 AS
-BEGIN ATOMIC WITH
-(
-	TRANSACTION ISOLATION LEVEL = SNAPSHOT,
-	LANGUAGE = N'English'
-)
+BEGIN 
     BEGIN TRY
 
 		DECLARE @NumberOfReadings int = (SELECT MAX(SensorDataListID) FROM @SensorReadings);

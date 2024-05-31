@@ -10,7 +10,6 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-
 /*GRANT VIEW ANY COLUMN ENCRYPTION KEY DEFINITION TO PUBLIC;
 
 
