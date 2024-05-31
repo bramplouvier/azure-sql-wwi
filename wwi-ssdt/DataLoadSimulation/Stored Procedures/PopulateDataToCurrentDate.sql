@@ -5,6 +5,7 @@ CREATE PROCEDURE DataLoadSimulation.PopulateDataToCurrentDate
 @SundayPercentageOfNormalWorkDay int,
 @IsSilentMode bit,
 @AreDatesPrinted bit
+WITH EXECUTE AS OWNER
 AS
 BEGIN
     SET NOCOUNT ON;
