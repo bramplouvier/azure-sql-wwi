@@ -38,6 +38,7 @@ jobs:
       - name: Build dacpac
         shell: bash
         run: |
+          cd wwi-ssdt
           dotnet build --framework net6.0 /p:NetCoreBuild=true --configuration Release
       - name: Build Bicep file
         uses: Azure/cli@v1
@@ -56,7 +57,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload main.json
-          path: './bin/Release'
+          path: './wwi-ssdt/bin/Release'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
