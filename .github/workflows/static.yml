@@ -48,16 +48,13 @@ jobs:
             az bicep build --file ${GITHUB_WORKSPACE}/infra/main.bicep --outfile ./output/main.json
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Upload bicep artifact
+      - name: Upload pages artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload main.json
-          path: './output'
-      - name: Upload dacpac artifacts
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload main.json
-          path: './wwi-ssdt/bin/Release'
+          path: |
+            ./output
+            ./wwi-ssdt/bin/Release/WideWorldImporters.dacpac
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
