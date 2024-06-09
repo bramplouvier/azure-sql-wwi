@@ -38,23 +38,22 @@ jobs:
       - name: Build dacpac
         shell: bash
         run: |
+          mkdir -p ./output
           cd wwi-ssdt
           dotnet build --framework net6.0 /p:NetCoreBuild=true --configuration Release
+          cp ./bin/Release/WideWorldImporters.dacpac ../output
       - name: Build Bicep file
         uses: Azure/cli@v1
         with:
           inlineScript: |
-            mkdir ./output
+            mkdir -p ./output
             az bicep build --file ${GITHUB_WORKSPACE}/infra/main.bicep --outfile ./output/main.json
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload pages artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload main.json
-          path: |
-            ./output
-            ./wwi-ssdt/bin/Release/WideWorldImporters.dacpac
+          path: ./output
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
