@@ -60,6 +60,7 @@ module dbDeployment 'deploymentScript.bicep' = {
     sqlServerName: name
     storageAccountName: 'stor${name}'
     userAssignedIdentityName: 'manid-sqlaadadmin'
+    bacpacUrl: 'https://bramplouvier.github.io/azure-sql-wwi/WideWorldImporters.dacpac'
   }
   dependsOn: [database]
 }
