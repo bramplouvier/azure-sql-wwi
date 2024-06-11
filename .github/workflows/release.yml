@@ -1,0 +1,35 @@
+name: Publish
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Release
+    runs-on: 'any'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+      - name: Build dacpac
+        shell: bash
+        run: |
+          mkdir -p ./output
+          cd wwi-ssdt
+          dotnet build --framework net6.0 /p:NetCoreBuild=true --configuration Release
+          cp ./bin/Release/WideWorldImporters.dacpac ../output
+      - name: Build Bicep file
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            mkdir -p ./output
+            az bicep build --file ${GITHUB_WORKSPACE}/infra/main.bicep --outfile ./output/main.json      
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "./output/*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
