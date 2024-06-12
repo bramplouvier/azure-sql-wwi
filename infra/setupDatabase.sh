@@ -1,5 +1,12 @@
 #printenv
 
+# Install sqlpackage tool
+SQLPACKAGE_DIR=./sqlpackage
+mkdir $SQLPACKAGE_DIR
+wget https://aka.ms/sqlpackage-linux -O /tmp/sqlpackage.zip
+unzip /tmp/sqlpackage.zip -d $SQLPACKAGE_DIR
+chmod +x $SQLPACKAGE_DIR/sqlpackage
+
 curl -L -o "$databaseName.bacpac" $bacpacUrl > /dev/null
 
 ACCOUNT_KEY=$(az storage account keys list \
