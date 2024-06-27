@@ -1,7 +1,12 @@
+@description('Name of the database')
 param name string
-param location string
+@description('Password for the sqladmin user')
 @secure()
 param saPassword string
+
+param bacpacUrl string = 'https://github.com/bramplouvier/azure-sql-wwi/releases/download/v0.0.1/WideWorldImporters.dacpac'
+
+var location = resourceGroup().location
 
 module manid 'manid.bicep' = {
   name: 'manid'
@@ -60,7 +65,7 @@ module dbDeployment 'deploymentScript.bicep' = {
     sqlServerName: name
     storageAccountName: 'stor${name}'
     userAssignedIdentityName: 'manid-sqlaadadmin'
-    bacpacUrl: 'https://bramplouvier.github.io/azure-sql-wwi/WideWorldImporters.dacpac'
+    bacpacUrl: bacpacUrl
   }
   dependsOn: [database]
 }
