@@ -1,8 +1,17 @@
 @description('Name of the database')
-param name string
+param databaseName string
 @description('Password for the sqladmin user')
 @secure()
 param saPassword string
+
+
+@allowed([
+  'new'
+  'existing'
+])
+param newOrExistingServer string = 'new'
+@description('Name of the server')
+param serverName string
 
 param bacpacUrl string = 'https://github.com/bramplouvier/azure-sql-wwi/releases/download/v0.0.1/WideWorldImporters.dacpac'
 
@@ -20,7 +29,7 @@ module storage 'storage.bicep' = {
   name: 'storage'
   params: {
     location: location
-    name: 'stor${name}'
+    name: 'stor${databaseName}'
   }
 }
 
@@ -35,11 +44,15 @@ module role 'roleAssignments.bicep' = {
   }
 }
 
-module sqlserver 'sqlserver.bicep' = {
+resource existingSqlServer 'Microsoft.Sql/servers@2022-05-01-preview' existing = if (newOrExistingServer == 'existing'){
+  name: serverName
+}
+
+module sqlserver 'sqlserver.bicep' = if (newOrExistingServer == 'new') {
   name: 'sqlserver'
   params: {
     location: location
-    name: name
+    name: serverName
     saPassword: saPassword
     administratorPrincipalType: 'Application'
     administratorPrincipalId: manid.outputs.uamidClientId
@@ -52,18 +65,20 @@ module database 'database.bicep' = {
     databaseName: 'wwi'
     databaseSku: 'S3'
     location: location
-    serverName: name
+    serverName: serverName
   }
+  dependsOn: [sqlserver, existingSqlServer]
 }
 
 module dbDeployment 'deploymentScript.bicep' = {
   name: 'dbdeploy'
   params: {
     location: location
-    name: '${name}Deploy'
+    name: '${databaseName}Deploy'
     saPassword: saPassword
-    sqlServerName: name
-    storageAccountName: 'stor${name}'
+    sqlServerName: serverName
+    databaseName: databaseName
+    storageAccountName: 'stor${databaseName}'
     userAssignedIdentityName: 'manid-sqlaadadmin'
     bacpacUrl: bacpacUrl
   }

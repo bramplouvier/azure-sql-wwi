@@ -9,8 +9,8 @@ resource server 'Microsoft.Sql/servers@2023-05-01-preview' existing = {
 
 resource db 'Microsoft.Sql/servers/databases@2023-05-01-preview' = {
   location: location
-  name: databaseName
   parent: server
+  name: databaseName
   sku: {
     name: databaseSku
   }

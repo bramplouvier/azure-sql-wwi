@@ -6,7 +6,7 @@ param storageAccountName string
 param sqlServerName string
 param userAssignedIdentityName string
 param resourceGroupName string = resourceGroup().name
-param databaseName string = 'wwi'
+param databaseName string
 param bacpacUrl string = 'https://github.com/microsoft/sql-server-samples/releases/download/wide-world-importers-v1.0/WideWorldImporters-Standard.bacpac'
 param timestamp string = utcNow()
 var identity = resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', userAssignedIdentityName)
