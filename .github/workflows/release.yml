@@ -47,12 +47,6 @@ jobs:
           inlineScript: |
             mkdir -p ./output
             az bicep build --file ${GITHUB_WORKSPACE}/infra/main.bicep --outfile ./output/main.json      
-      - name: Publish
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "./output/*"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload pages artifacts
