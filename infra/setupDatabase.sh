@@ -1,37 +1,28 @@
 #printenv
+#Install curl
+echo "Installing curl"
+apk add curl 
 
+cd /tmp
 # Install sqlpackage tool
-SQLPACKAGE_DIR=./sqlpackage
+SQLPACKAGE_DIR=/tmp/sqlpackage
 mkdir $SQLPACKAGE_DIR
-wget https://aka.ms/sqlpackage-linux -O /tmp/sqlpackage.zip
-unzip /tmp/sqlpackage.zip -d $SQLPACKAGE_DIR
+echo "Downloading SqlPackage from https://aka.ms/sqlpackage-linux"
+curl -L -o /tmp/sqlpackage.zip https://aka.ms/sqlpackage-linux -q
+echo "Unpacking SqlPackage"
+unzip /tmp/sqlpackage.zip -q -d $SQLPACKAGE_DIR 
 chmod +x $SQLPACKAGE_DIR/sqlpackage
 
-DOWNLOAD_RESPONSE=$(curl -s -o "$databaseName.bacpac" -w "%{response_code}" $bacpacUrl)
-if [ "$DOWNLOAD_RESPONSE" != "200" ]; then
-    echo "Download failed with code $DOWNLOAD_RESPONSE"
-    echo "URL: $bacpacUrl"
+echo "Downloading bacpacs from $bacpacUrl"
+DOWNLOAD_RESPONSE1=$(curl -L -o "master.dacpac" -w "%{response_code}" $masterDacpacUrl)
+DOWNLOAD_RESPONSE2=$(curl -L -o "$databaseName.dacpac" -w "%{response_code}" $dbDacpacUrl)
+if [ "$DOWNLOAD_RESPONSE1" != "200" ] || [ "$DOWNLOAD_RESPONSE1" != "200" ]; then
+    echo "Download failed"
+    echo "URL: $masterDacpacUrl, Result: $DOWNLOAD_RESPONSE1"
+    echo "URL: $dbDacpacUrl, Result: $DOWNLOAD_RESPONSE2"
 else
-    ACCOUNT_KEY=$(az storage account keys list \
-        --resource-group $resourceGroup \
-        --account-name $storageAccountName | jq --raw-output '.[0].value')
-
-    az storage blob upload \
-        --account-name $storageAccountName \
-        --container-name bacpacs \
-        --name "${databaseName}.bacpac" \
-        --file "${databaseName}.bacpac" \
-        --auth-mode login
-
-    az sql db import \
-            --admin-password $administratorLoginPassword \
-            --admin-user $administratorLogin \
-            --storage-key $ACCOUNT_KEY \
-            --storage-key-type StorageAccessKey \
-            --storage-uri "https://$storageAccountName.blob.core.windows.net/bacpacs/$databaseName.bacpac" \
-            --name $databaseName \
-            --auth-type SQL \
-            --resource-group $resourceGroup \
-            --server $sqlServerName
+    # example publish from Azure SQL Database using SQL authentication and a connection string
+    $SQLPACKAGE_DIR/sqlpackage /Action:Publish /SourceFile:/tmp/$databaseName.dacpac \
+      /TargetConnectionString:"Server=tcp:$sqlServerName.database.windows.net,1433;Initial Catalog=$databaseName;Persist Security Info=False;User ID=$administratorLogin;Password=$administratorLoginPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 fi
 

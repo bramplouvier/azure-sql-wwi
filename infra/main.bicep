@@ -13,7 +13,8 @@ param newOrExistingServer string = 'new'
 @description('Name of the server')
 param serverName string
 
-param bacpacUrl string = 'https://github.com/bramplouvier/azure-sql-wwi/releases/download/v0.0.1/WideWorldImporters.dacpac'
+param dbDacpacUrl string = 'https://bramplouvier.github.io/azure-sql-wwi/WideWorldImporters.dacpac'
+param masterDacpacUrl string = 'https://bramplouvier.github.io/azure-sql-wwi/master.dacpac'
 
 var location = resourceGroup().location
 
@@ -80,7 +81,8 @@ module dbDeployment 'deploymentScript.bicep' = {
     databaseName: databaseName
     storageAccountName: 'stor${databaseName}'
     userAssignedIdentityName: 'manid-sqlaadadmin'
-    bacpacUrl: bacpacUrl
+    dbDacpacUrl: dbDacpacUrl
+    masterDacpacUrl: masterDacpacUrl
   }
   dependsOn: [database]
 }

@@ -28,9 +28,6 @@
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="wwi2.xml" />
-  </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
   </Target>

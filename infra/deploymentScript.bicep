@@ -7,7 +7,8 @@ param sqlServerName string
 param userAssignedIdentityName string
 param resourceGroupName string = resourceGroup().name
 param databaseName string
-param bacpacUrl string = 'https://github.com/microsoft/sql-server-samples/releases/download/wide-world-importers-v1.0/WideWorldImporters-Standard.bacpac'
+param dbDacpacUrl string
+param masterDacpacUrl string
 param timestamp string = utcNow()
 var identity = resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', userAssignedIdentityName)
 
@@ -28,7 +29,7 @@ resource script 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
     }
   }
   properties: {
-    azCliVersion: '2.9.1'
+    azCliVersion: '2.61.0'
     retentionInterval: 'PT1H'
     environmentVariables: [
       {
@@ -56,11 +57,14 @@ resource script 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
         value: databaseName
       }   
       {
-        name: 'bacpacUrl'
-        value: bacpacUrl
+        name: 'dbDacpacUrl'
+        value: dbDacpacUrl
       }                                                         
+      {
+        name: 'masterDacpacUrl'
+        value: masterDacpacUrl
+      }     
     ]
-    //primaryScriptUri: 'https://raw.githubusercontent.com/bramplouvier/azure-sql-wwi/main/infra/setupDatabase.sh'
     scriptContent: loadTextContent('./setupDatabase.sh', 'utf-8')
     forceUpdateTag: timestamp
     cleanupPreference: 'OnSuccess'
