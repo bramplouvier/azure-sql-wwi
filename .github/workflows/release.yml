@@ -40,7 +40,7 @@ jobs:
           mkdir -p ./output
           cd wwi-ssdt
           dotnet build --framework net6.0 /p:NetCoreBuild=true --configuration Release
-          cp ./bin/Release/WideWorldImporters.dacpac ../output
+          cp ./bin/Release/*.dacpac ../output
       - name: Build Bicep file
         uses: Azure/cli@v1
         with:
