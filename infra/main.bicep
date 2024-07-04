@@ -1,8 +1,18 @@
 @description('Name of the database')
 param databaseName string
+@description('SKU for the database')
+@allowed([
+  'S3'
+  'S4'
+  'S6'
+  'S7'
+])
+param databaseSku string = 'S3'
+
 @description('Password for the sqladmin user')
 @secure()
 param saPassword string
+
 
 
 @allowed([
@@ -23,14 +33,6 @@ module manid 'manid.bicep' = {
   params: {
     location: location
     name: 'manid-sqlaadadmin'
-  }
-}
-
-module storage 'storage.bicep' = {
-  name: 'storage'
-  params: {
-    location: location
-    name: 'stor${databaseName}'
   }
 }
 
@@ -63,8 +65,8 @@ module sqlserver 'sqlserver.bicep' = if (newOrExistingServer == 'new') {
 module database 'database.bicep' = {
   name: 'wwiDatabase'
   params: {
-    databaseName: 'wwi'
-    databaseSku: 'S3'
+    databaseName: databaseName
+    databaseSku: databaseSku
     location: location
     serverName: serverName
   }
@@ -79,7 +81,6 @@ module dbDeployment 'deploymentScript.bicep' = {
     saPassword: saPassword
     sqlServerName: serverName
     databaseName: databaseName
-    storageAccountName: 'stor${databaseName}'
     userAssignedIdentityName: 'manid-sqlaadadmin'
     dbDacpacUrl: dbDacpacUrl
     masterDacpacUrl: masterDacpacUrl
